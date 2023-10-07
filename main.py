@@ -7,7 +7,7 @@ headers = {
 }
 # Define the URL to fetch JSON data from
 url = "https://www.infraestruturasdeportugal.pt/negocios-e-servicos/horarios-ncombio/730/2023-10-07"
-
+#just to force a push
 # Send an HTTP GET request to the URL
 response = requests.get(url, headers=headers)
 
