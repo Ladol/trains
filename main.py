@@ -17,10 +17,10 @@ if response.status_code == 200:
     data = response.json()
 
     # Define the path where you want to save the JSON file in your local repository
-    file_path = f"2023-10/2023-10-07/730-2023-10-07.json"
+    #file_path = f"2023-10/2023-10-07/730-2023-10-07.json"
 
     # Serialize the JSON data and save it to the specified file path
-    with open('output2.json', 'w') as json_file:
+    with open('./2023-10/2023-10-07/output3.json', 'w') as json_file:
         json.dump(data, json_file)
 
     print("JSON data has been fetched and saved successfully.")
