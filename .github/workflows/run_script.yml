@@ -24,8 +24,8 @@ jobs:
     - name: Run Python Script
       run: python main.py  # Replace with the actual command to run your script
 
-    - name: Stage JSON File
-      run: git add output.json  # Replace with the correct file path
+    #- name: Stage JSON File
+     # run: git add output.json  # Replace with the correct file path
 
     - name: commit files
       run: |
