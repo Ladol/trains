@@ -20,9 +20,12 @@ headers = {
 
 github_train_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-10/{current_date}/trains.json"
 github_train_response = requests.get(github_train_url, headers=headers)
+infraestruturas_url = f"https://www.infraestruturasdeportugal.pt/negocios-e-servicos/horarios-ncombio/{train_number}/{current_date}"
+infraestruturas_response = requests.get(infraestruturas_url, headers=headers)
 train_numbers = []
-if github_train_response.status_code == 200:
+if github_train_response.status_code == 200 and infraestruturas_response.status_code == 200:
     github_train_data = github_train_response.json()
+    infraestruturas_data = infraestruturas_response.json()
     train_numbers = github_train_data["trains"]
     updateNumbers = False
 
@@ -36,22 +39,10 @@ if github_train_response.status_code == 200:
         github_response = requests.get(github_url, headers=headers)
         
         if github_response.status_code == 404:
-            # GitHub raw URL does not exist, make a request to infraestruturasdeportugal.pt
-            infraestruturas_url = f"https://www.infraestruturasdeportugal.pt/negocios-e-servicos/horarios-ncombio/{train_number}/{current_date}"
-            infraestruturas_response = requests.get(infraestruturas_url, headers=headers)
-            
-            if infraestruturas_response.status_code == 200:
-                # Parse JSON data from infraestruturasdeportugal.pt
-                infraestruturas_data = infraestruturas_response.json()
                 
-                # Process data (skip SUPRIMIDO and update NodesPassagemComboio)
-                #processed_data = process_train_data(infraestruturas_data, infraestruturas_data)
-                
-                # Save processed data to a file
-                with open(f'./2023-10/{current_date}/{train_number}.json', 'w') as json_file:
-                    json.dump(infraestruturas_data, json_file)
-            else:
-                print(f"Failed to fetch data from infraestruturasdeportugal.pt for train {train_number}")
+            # Save processed data to a file
+            with open(f'./2023-10/{current_date}/{train_number}.json', 'w') as json_file:
+                json.dump(infraestruturas_data, json_file)
         else:
             #print(f"Data already exists for train {train_number} on GitHub")
             # GitHub raw URL exists, fetch the data from GitHub
