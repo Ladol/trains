@@ -20,18 +20,20 @@ headers = {
 
 github_train_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-10/{current_date}/trains.json"
 github_train_response = requests.get(github_train_url, headers=headers)
-infraestruturas_url = f"https://www.infraestruturasdeportugal.pt/negocios-e-servicos/horarios-ncombio/{train_number}/{current_date}"
-infraestruturas_response = requests.get(infraestruturas_url, headers=headers)
 train_numbers = []
-if github_train_response.status_code == 200 and infraestruturas_response.status_code == 200:
+if github_train_response.status_code == 200:
     github_train_data = github_train_response.json()
-    infraestruturas_data = infraestruturas_response.json()
     train_numbers = github_train_data["trains"]
     updateNumbers = False
 
 
     # Loop through train numbers
     for train_number in train_numbers:
+        infraestruturas_url = f"https://www.infraestruturasdeportugal.pt/negocios-e-servicos/horarios-ncombio/{train_number}/{current_date}"
+        infraestruturas_response = requests.get(infraestruturas_url, headers=headers)
+        if infraestruturas_response.status_code != 200:
+            continue
+        infraestruturas_data = infraestruturas_response.json()
         # Define GitHub raw URL
         github_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-10/{current_date}/{train_number}.json"
         
@@ -39,7 +41,6 @@ if github_train_response.status_code == 200 and infraestruturas_response.status_
         github_response = requests.get(github_url, headers=headers)
         
         if github_response.status_code == 404:
-                
             # Save processed data to a file
             with open(f'./2023-10/{current_date}/{train_number}.json', 'w') as json_file:
                 json.dump(infraestruturas_data, json_file)
