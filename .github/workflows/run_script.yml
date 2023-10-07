@@ -1,8 +1,9 @@
 name: Python Script Workflow
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'  # Run every 2 minutes
+  push:
+    branches:
+      - main  # Trigger the workflow when code is pushed to the main branch
 
 jobs:
   build:
