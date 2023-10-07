@@ -20,8 +20,8 @@ if response.status_code == 200:
     file_path = f"2023-10/2023-10-07/730-2023-10-07.json"
 
     # Serialize the JSON data and save it to the specified file path
-    with open(file_path, "w") as file:
-        json.dump(data, file)
+    with open('output.json', 'w') as json_file:
+        json.dump(data, json_file)
 
     print("JSON data has been fetched and saved successfully.")
 else:
