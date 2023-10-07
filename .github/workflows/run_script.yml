@@ -24,3 +24,12 @@ jobs:
     - name: Run Python Script
       run: python main.py  # Replace with the actual command to run your script
 
+    - name: Stage JSON File
+      run: git add output.json  # Replace with the correct file path
+
+    - name: Commit Changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Add JSON data"
+        git push
