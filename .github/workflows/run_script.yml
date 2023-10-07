@@ -22,7 +22,7 @@ jobs:
       run: pip install -r requirements.txt  # If you have a requirements.txt file
 
     - name: Run Python Script
-      run: python main.py  # Replace with the actual command to run your script
+      run: python main2.py  # Replace with the actual command to run your script
 
     #- name: Stage JSON File
      # run: git add output.json  # Replace with the correct file path
