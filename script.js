@@ -59,9 +59,9 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
             const atrasosCell = row.insertCell(3);
 
             // Create a select element and set its innerHTML
-            const dropdown = document.createElement('select');
-            dropdown.innerHTML = getDelays(node.NomeEstacao, trainNumber); // Constructed manually
-            atrasosCell.appendChild(dropdown); // Append the dropdown to the cell
+            //const dropdown = document.createElement('select');
+            atrasosCell.innerHTML = getDelays(node.NomeEstacao, trainNumber); // Constructed manually
+            //atrasosCell.appendChild(dropdown); // Append the dropdown to the cell
 
             estacaoCell.textContent = node.NomeEstacao;
             programadoCell.textContent = node.HoraProgramada;
