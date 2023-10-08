@@ -108,11 +108,11 @@ async function getDelays(NomeEstacao, trainNumber) {
             const data = await response.json();
             const situacaoComboio = data.response.SituacaoComboio;
             if (situacaoComboio === null) {
-                innerHTML += `<option>${formattedDate} -> Não Realizado</option>`;
+                innerHTML += `<option value=0>${formattedDate} -> Não Realizado</option>`;
                 continue;
             }
             else if (situacaoComboio === "SUPRIMIDO") {
-                innerHTML += `<option>${formattedDate} -> SUPRIMIDO</option>`;
+                innerHTML += `<option value=0>${formattedDate} -> SUPRIMIDO</option>`;
                 continue;
             }
             const nodesPassagemComboio = data.response.NodesPassagemComboio;
@@ -132,11 +132,18 @@ async function getDelays(NomeEstacao, trainNumber) {
 
                             // Calculate the time difference
                             const atraso = (horaPrevistaHours - horaProgramadaHours)*60 + (horaPrevistaMinutes - horaProgramadaMinutes)
-                            innerHTML += `<option>${formattedDate} -> ${atraso}</option>`
+                            let val = 1;
+                            if(atraso >= 30){
+                                val = 3;
+                            }
+                            else if(atraso >= 15){
+                                val = 2;
+                            }
+                            innerHTML += `<option value=${val}>${formattedDate} -> ${atraso}</option>`
                         }
                     }
                     else{
-                        innerHTML += `<option>${formattedDate} -> 0</option>`
+                        innerHTML += `<option value=1>${formattedDate} -> 0</option>`
                     }
                     return;
                 }
