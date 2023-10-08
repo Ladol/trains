@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Search</title>
+</head>
+<body>
+    <h1>Train Search</h1>
+
+    <form id="search-form">
+        <label for="train-number">Train Number:</label>
+        <input type="text" id="train-number" name="train-number" required>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" max="" required>
+
+        <input type="submit" value="Search">
+    </form>
+
+    <div id="result-container">
+        <!-- Result will be displayed here -->
+    </div>
+
+    <script>
+        // Set the default value of the date input to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('value', today);
+
+        // Restrict the date input to dates not further than today
+        document.getElementById('date').setAttribute('max', today);
+    </script>
+</body>
+</html>
