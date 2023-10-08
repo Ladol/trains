@@ -56,6 +56,12 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
             const estacaoCell = row.insertCell(0);
             const programadoCell = row.insertCell(1);
             const realCell = row.insertCell(2);
+            const atrasosCell = row.insertCell(3);
+
+            // Create a select element and set its innerHTML
+            const dropdown = document.createElement('select');
+            dropdown.innerHTML = getDelays(node.NomeEstacao); // Constructed manually
+            atrasosCell.appendChild(dropdown); // Append the dropdown to the cell
 
             estacaoCell.textContent = node.NomeEstacao;
             programadoCell.textContent = node.HoraProgramada;
@@ -75,4 +81,68 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
         resultContainer.innerHTML = ''; // Clear any previous content
         resultContainer.appendChild(table);
     }
+}
+
+
+async function getDelays(NomeEstacao) {
+    // time to get the delays
+    // Get the current date in Lisbon, Portugal's timezone (WET or WEST)
+    let currentDate = new Date().toLocaleString('en-US', { timeZone: 'Europe/Lisbon' });
+
+    let innerHTML = '<select>';
+    while (true) {
+        const formattedDate = new Date(currentDate).toISOString().split('T')[0];
+        const url = `./${formattedDate.substring(0, 7)}/${formattedDate}/${trainNumber}.json`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                // File not found, stop fetching
+                break;
+            }
+            const data = await response.json();
+            const situacaoComboio = data.SituacaoComboio;
+            if (situacaoComboio === null) {
+                innerHTML += `<option>${formattedDate} -> Não Realizado</option>`
+                continue;
+            }
+            else if (situacaoComboio === "SUPRIMIDO") {
+                innerHTML += `<option>${formattedDate} -> SUPRIMIDO</option>`
+                continue;
+            }
+            const nodesPassagemComboio = data.NodesPassagemComboio;
+
+            nodesPassagemComboio.forEach(node => {
+                if (node.NomeEstacao === NomeEstacao) {
+                    if (node.Observacoes && node.Observacoes !== "") {
+                        const match = node.Observacoes.match(/Hora Prevista:(\d{2}):(\d{2})/);
+                        if (match) {
+                            let horaPrevistaHours = parseInt(match[1]);
+                            if (horaPrevistaHours === 0 || horaPrevistaHours === 1){
+                                horaPrevistaHours += 24;
+                            }
+                            const horaPrevistaMinutes = parseInt(match[2]);
+                            const horaProgramadaHours = parseInt(node.HoraProgramada.substring(0, 2));
+                            const horaProgramadaMinutes = parseInt(node.HoraProgramada.substring(3, 5));
+
+                            // Calculate the time difference
+                            const atraso = (horaPrevistaHours - horaProgramadaHours)*60 + (horaPrevistaMinutes - horaProgramadaMinutes)
+                            innerHTML += `<option>${formattedDate} -> ${atraso}</option>`
+                        }
+                    }
+                    else{
+                        innerHTML += `<option>${formattedDate} -> 0</option>`
+                    }
+                }
+            });
+
+            // Move to the previous day
+            currentDate.setDate(currentDate.getDate() - 1);
+        } catch (error) {
+            console.error(error);
+            break;
+        }
+    }
+    innerHTML += `</select>`
+    return innerHTML;
 }
