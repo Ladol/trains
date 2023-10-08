@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 // Handle the JSON data
-                handleJsonData(data, trainNumber, selectedDate);
+                handleJsonData(data, trainNumber, selectedDate, resultContainer);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function handleJsonData(data, trainNumber, selectedDate) {
+function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
     const response = data.response;
     const situacaoComboio = response.SituacaoComboio;
     const nodesPassagemComboio = response.NodesPassagemComboio;
