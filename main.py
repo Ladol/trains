@@ -50,7 +50,7 @@ if github_train_response.status_code == 200:
             github_train_data["trains"].remove(train_number)
             updateNumbers = True
             #continue
-        else:
+        elif github_response.status_code != 404:
             #print(f"Data already exists for train {train_number} on GitHub")
             # GitHub raw URL exists, fetch the data from GitHub
             github_data = github_response.json()
