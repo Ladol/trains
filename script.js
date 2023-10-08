@@ -101,7 +101,7 @@ async function getDelays(NomeEstacao, trainNumber) {
                 break;
             }
             const data = await response.json();
-            const situacaoComboio = data.SituacaoComboio;
+            const situacaoComboio = data.response.SituacaoComboio;
             if (situacaoComboio === null) {
                 innerHTML += `<option>${formattedDate} -> Não Realizado</option>`
                 continue;
@@ -110,7 +110,7 @@ async function getDelays(NomeEstacao, trainNumber) {
                 innerHTML += `<option>${formattedDate} -> SUPRIMIDO</option>`
                 continue;
             }
-            const nodesPassagemComboio = data.NodesPassagemComboio;
+            const nodesPassagemComboio = data.response.NodesPassagemComboio;
             console.log(data);
             nodesPassagemComboio.forEach(node => {
                 if (node.NomeEstacao === NomeEstacao) {
