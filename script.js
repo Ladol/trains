@@ -91,11 +91,13 @@ async function getDelays(NomeEstacao, trainNumber) {
     // Get the current date in Lisbon, Portugal's timezone (WET or WEST)
     let currentDate = new Date().toLocaleString('en-US', { timeZone: 'Europe/Lisbon' });
     currentDate = new Date(currentDate); // Convert the formatted date back to a Date object
-
+    let iter = 0;
     let innerHTML = '<select>';
-    while (true) {
+    while (iter < 100) {
+        iter += 1;
         const formattedDate = new Date(currentDate).toISOString().split('T')[0];
         const url = `./${formattedDate.substring(0, 7)}/${formattedDate}/${trainNumber}.json`;
+        currentDate.setDate(currentDate.getDate() - 1);
 
         try {
             const response = await fetch(url);
@@ -106,18 +108,17 @@ async function getDelays(NomeEstacao, trainNumber) {
             const data = await response.json();
             const situacaoComboio = data.response.SituacaoComboio;
             if (situacaoComboio === null) {
-                innerHTML += `<option>${formattedDate} -> Não Realizado</option>`
+                innerHTML += `<option>${formattedDate} -> Não Realizado</option>`;
                 continue;
             }
             else if (situacaoComboio === "SUPRIMIDO") {
-                innerHTML += `<option>${formattedDate} -> SUPRIMIDO</option>`
+                innerHTML += `<option>${formattedDate} -> SUPRIMIDO</option>`;
                 continue;
             }
             const nodesPassagemComboio = data.response.NodesPassagemComboio;
             nodesPassagemComboio.forEach(node => {
                 if (node.NomeEstacao === NomeEstacao) {
                     // Move to the previous day
-                    currentDate.setDate(currentDate.getDate() - 1);
                     if (node.Observacoes && node.Observacoes !== "") {
                         const match = node.Observacoes.match(/Hora Prevista:(\d{2}):(\d{2})/);
                         if (match) {
