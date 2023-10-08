@@ -50,6 +50,9 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
             headerRow.appendChild(th);
         });
 
+        // Create an array to store promises for each dropdown
+        const dropdownPromises = [];
+
         // Create table rows
         nodesPassagemComboio.forEach(node => {
             const row = tbody.insertRow();
@@ -76,6 +79,15 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
             } else {
                 realCell.textContent = node.HoraProgramada;
             }
+
+            // Create a promise for the dropdown and push it to the array
+            dropdownPromises.push(getDelays(node.NomeEstacao, trainNumber));
+        });
+
+        // Loop through the rows again and set the innerHTML of atrasosCell
+        nodesPassagemComboio.forEach((node, index) => {
+            const atrasosCell = table.rows[index].insertCell(3);
+            atrasosCell.innerHTML = dropdownContents[index];
         });
 
         resultContainer.innerHTML = ''; // Clear any previous content
