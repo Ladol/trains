@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
+async function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
     const response = data.response;
     const situacaoComboio = response.SituacaoComboio;
     const nodesPassagemComboio = response.NodesPassagemComboio;
@@ -83,7 +83,9 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
             // Create a promise for the dropdown and push it to the array
             dropdownPromises.push(getDelays(node.NomeEstacao, trainNumber));
         });
-
+        
+        // Wait for all dropdown promises to resolve
+        const dropdownContents = await Promise.all(dropdownPromises);
         // Loop through the rows again and set the innerHTML of atrasosCell
         nodesPassagemComboio.forEach((node, index) => {
             const atrasosCell = table.rows[index].insertCell(3);
