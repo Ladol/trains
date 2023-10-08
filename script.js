@@ -88,6 +88,7 @@ async function getDelays(NomeEstacao, trainNumber) {
     // time to get the delays
     // Get the current date in Lisbon, Portugal's timezone (WET or WEST)
     let currentDate = new Date().toLocaleString('en-US', { timeZone: 'Europe/Lisbon' });
+    currentDate = new Date(currentDate); // Convert the formatted date back to a Date object
 
     let innerHTML = '<select>';
     while (true) {
