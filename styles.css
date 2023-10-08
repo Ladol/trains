@@ -97,16 +97,16 @@ select option {
 }
 
 /* Green for value=1 */
-select option[value=1] {
+select option[value="1"] {
     color: green;
 }
 
 /* Orange/yellowish for value=2 */
-select option[value=2] {
+select option[value="2"] {
     color: orange;
 }
 
 /* Red for value=3 */
-select option[value=3] {
+select option[value="3"] {
     color: red;
 }
