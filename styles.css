@@ -1,0 +1,91 @@
+/* Apply a dark theme */
+body {
+    background-color: #121212;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Center the form and result container */
+#search-form, #result-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Style the form */
+#search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #333;
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+label, input {
+    margin: 10px;
+}
+
+input[type="text"], input[type="date"], input[type="submit"] {
+    padding: 10px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+/* Style the table */
+table {
+    width: 70%;
+    max-width: 1000px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+}
+
+table, th, td {
+    border: 1px solid #333;
+}
+
+th {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    padding: 10px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+}
+
+/* Alternate row colors for better distinction */
+tbody tr:nth-child(even) {
+    background-color: #333;
+}
+
+/* Customize dropdown styles */
+select {
+    padding: 5px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #FFFFFF;
+    border-radius: 5px;
+}
+
+/* Customize the option styles based on the text */
+select option {
+    padding: 5px;
+}
