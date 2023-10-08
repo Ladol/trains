@@ -39,17 +39,17 @@ if github_train_response.status_code == 200:
         # Check if the GitHub raw URL exists (returns 404 if not)
         github_response = requests.get(github_url, headers=headers)
 
+        if github_response.status_code == 404:
+            # Save processed data to a file
+            with open(f'./2023-10/{current_date}/{train_number}.json', 'w') as json_file:
+                json.dump(infraestruturas_data, json_file)
+
         situacao_comboio = infraestruturas_data["response"]["SituacaoComboio"]
         if situacao_comboio is None or situacao_comboio == "SUPRIMIDO":
             #print(f"Skipping train {train_number} as SituacaoComboio is {situacao_comboio}")
             train_numbers.remove(train_number)
             updateNumbers = True
             #continue
-        
-        if github_response.status_code == 404:
-            # Save processed data to a file
-            with open(f'./2023-10/{current_date}/{train_number}.json', 'w') as json_file:
-                json.dump(infraestruturas_data, json_file)
         else:
             #print(f"Data already exists for train {train_number} on GitHub")
             # GitHub raw URL exists, fetch the data from GitHub
