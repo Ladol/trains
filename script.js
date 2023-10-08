@@ -116,6 +116,8 @@ async function getDelays(NomeEstacao, trainNumber) {
             console.log(nodesPassagemComboio)
             nodesPassagemComboio.forEach(node => {
                 if (node.NomeEstacao === NomeEstacao) {
+                    // Move to the previous day
+                    currentDate.setDate(currentDate.getDate() - 1);
                     if (node.Observacoes && node.Observacoes !== "") {
                         const match = node.Observacoes.match(/Hora Prevista:(\d{2}):(\d{2})/);
                         if (match) {
@@ -135,11 +137,9 @@ async function getDelays(NomeEstacao, trainNumber) {
                     else{
                         innerHTML += `<option>${formattedDate} -> 0</option>`
                     }
+                    return;
                 }
             });
-
-            // Move to the previous day
-            currentDate.setDate(currentDate.getDate() - 1);
         } catch (error) {
             console.error(error);
             break;
