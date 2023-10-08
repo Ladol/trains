@@ -111,7 +111,7 @@ async function getDelays(NomeEstacao, trainNumber) {
                 continue;
             }
             const nodesPassagemComboio = data.NodesPassagemComboio;
-
+            console.log(data);
             nodesPassagemComboio.forEach(node => {
                 if (node.NomeEstacao === NomeEstacao) {
                     if (node.Observacoes && node.Observacoes !== "") {
