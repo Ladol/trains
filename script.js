@@ -79,20 +79,7 @@ async function handleJsonData(data, trainNumber, selectedDate, resultContainer) 
             } else {
                 realCell.textContent = node.HoraProgramada;
             }
-
-            // Create a promise for the dropdown and push it to the array
-            //dropdownPromises.push(getDelays(node.NomeEstacao, trainNumber));
         });
-
-        // Wait for all dropdown promises to resolve
-        //const dropdownContents = await Promise.all(dropdownPromises);
-
-        // Loop through the rows again and set the innerHTML of atrasosCell
-        //nodesPassagemComboio.forEach((node, index) => {
-         //   const atrasosCell = table.rows[index].insertCell(3);
-          //  atrasosCell.innerHTML = dropdownContents[index];
-        //});
-
         resultContainer.innerHTML = ''; // Clear any previous content
         resultContainer.appendChild(table);
     }
@@ -127,8 +114,6 @@ async function getDelays(NomeEstacao, trainNumber) {
                 continue;
             }
             const nodesPassagemComboio = data.response.NodesPassagemComboio;
-            console.log(data);
-            console.log(nodesPassagemComboio)
             nodesPassagemComboio.forEach(node => {
                 if (node.NomeEstacao === NomeEstacao) {
                     // Move to the previous day
@@ -156,11 +141,11 @@ async function getDelays(NomeEstacao, trainNumber) {
                 }
             });
         } catch (error) {
-            console.error(error);
+            // no need to display this error!
+            //console.error(error);
             break;
         }
     }
     innerHTML += `</select>`;
-    console.log(innerHTML);
     return innerHTML;
 }
