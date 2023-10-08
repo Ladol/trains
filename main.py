@@ -44,7 +44,7 @@ if github_train_response.status_code == 200:
             #print(f"Skipping train {train_number} as SituacaoComboio is {situacao_comboio}")
             train_numbers.remove(train_number)
             updateNumbers = True
-            continue
+            #continue
         
         if github_response.status_code == 404:
             # Save processed data to a file
@@ -91,4 +91,3 @@ if github_train_response.status_code == 200:
     if updateNumbers:
         with open(f'./2023-10/{current_date}/trains.json', 'w') as json_file:
             json.dump(github_train_data, json_file)
-
