@@ -145,6 +145,7 @@ async function getDelays(NomeEstacao, trainNumber) {
             break;
         }
     }
-    innerHTML += `</select>`
+    innerHTML += `</select>`;
+    console.log(innerHTML);
     return innerHTML;
 }
