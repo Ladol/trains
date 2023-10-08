@@ -54,13 +54,18 @@ async function handleJsonData(data, trainNumber, selectedDate, resultContainer) 
         const dropdownPromises = [];
 
         // Loop through nodesPassagemComboio and create rows
-        nodesPassagemComboio.forEach(node => {
+        nodesPassagemComboio.forEach(async (node,index) => {
             const row = tbody.insertRow();
             const estacaoCell = row.insertCell(0);
             const programadoCell = row.insertCell(1);
             const realCell = row.insertCell(2);
             const atrasosCell = row.insertCell(3);
 
+            // Wait for all dropdown promises to resolve
+            dropdownPromises.push(getDelays(node.NomeEstacao, trainNumber));
+            const dropdownContents = await Promise.all(dropdownPromises);
+
+            atrasosCell.innerHTML = dropdownContents[index];
             estacaoCell.textContent = node.NomeEstacao;
             programadoCell.textContent = node.HoraProgramada;
 
@@ -76,17 +81,17 @@ async function handleJsonData(data, trainNumber, selectedDate, resultContainer) 
             }
 
             // Create a promise for the dropdown and push it to the array
-            dropdownPromises.push(getDelays(node.NomeEstacao, trainNumber));
+            //dropdownPromises.push(getDelays(node.NomeEstacao, trainNumber));
         });
 
         // Wait for all dropdown promises to resolve
-        const dropdownContents = await Promise.all(dropdownPromises);
+        //const dropdownContents = await Promise.all(dropdownPromises);
 
         // Loop through the rows again and set the innerHTML of atrasosCell
-        nodesPassagemComboio.forEach((node, index) => {
-            const atrasosCell = table.rows[index].insertCell(3);
-            atrasosCell.innerHTML = dropdownContents[index];
-        });
+        //nodesPassagemComboio.forEach((node, index) => {
+         //   const atrasosCell = table.rows[index].insertCell(3);
+          //  atrasosCell.innerHTML = dropdownContents[index];
+        //});
 
         resultContainer.innerHTML = ''; // Clear any previous content
         resultContainer.appendChild(table);
