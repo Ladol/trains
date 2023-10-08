@@ -67,7 +67,7 @@ if github_train_response.status_code == 200:
                 
             # Iterate through NodesPassagemComboio in data1
             write = False
-            for node1 in github_data["response"]["NodesPassagemComboio"]:
+            for index, node1 in enumerate(github_data["response"]["NodesPassagemComboio"]):
                 if node1["ComboioPassou"]:
                     continue
                 write = True
@@ -79,7 +79,7 @@ if github_train_response.status_code == 200:
                     if corresponding_node2["ComboioPassou"]:
                         node1["ComboioPassou"] = True
                     else:
-                        node1 = corresponding_node2
+                        github_data["response"]["NodesPassagemComboio"][index] = corresponding_node2
                 
             # Save updated data1 to a file
             if write:
