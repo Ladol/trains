@@ -60,7 +60,7 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
 
             // Create a select element and set its innerHTML
             const dropdown = document.createElement('select');
-            dropdown.innerHTML = getDelays(node.NomeEstacao); // Constructed manually
+            dropdown.innerHTML = getDelays(node.NomeEstacao, trainNumber); // Constructed manually
             atrasosCell.appendChild(dropdown); // Append the dropdown to the cell
 
             estacaoCell.textContent = node.NomeEstacao;
@@ -84,7 +84,7 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
 }
 
 
-async function getDelays(NomeEstacao) {
+async function getDelays(NomeEstacao, trainNumber) {
     // time to get the delays
     // Get the current date in Lisbon, Portugal's timezone (WET or WEST)
     let currentDate = new Date().toLocaleString('en-US', { timeZone: 'Europe/Lisbon' });
