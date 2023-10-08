@@ -47,7 +47,7 @@ if github_train_response.status_code == 200:
         situacao_comboio = infraestruturas_data["response"]["SituacaoComboio"]
         if situacao_comboio is None or situacao_comboio == "SUPRIMIDO":
             #print(f"Skipping train {train_number} as SituacaoComboio is {situacao_comboio}")
-            train_numbers.remove(train_number)
+            github_train_data["trains"].remove(train_number)
             updateNumbers = True
             #continue
         else:
@@ -61,7 +61,7 @@ if github_train_response.status_code == 200:
             # Check if SituacaoComboio is null or "SUPRIMIDO"
             if situacao_comboio is None or situacao_comboio == "SUPRIMIDO":
                 #print(f"Skipping train {train_number} as SituacaoComboio is {situacao_comboio}")
-                train_numbers.remove(train_number)
+                github_train_data["trains"].remove(train_number)
                 updateNumbers = True
                 continue
                 
@@ -86,7 +86,7 @@ if github_train_response.status_code == 200:
                 with open(f'./2023-10/{current_date}/{train_number}.json', 'w') as json_file:
                     json.dump(github_data, json_file)
             else:
-                train_numbers.remove(train_number)
+                github_train_data["trains"].remove(train_number)
                 updateNumbers = True
     if updateNumbers:
         with open(f'./2023-10/{current_date}/trains.json', 'w') as json_file:
