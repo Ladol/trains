@@ -42,7 +42,7 @@ function handleJsonData(data, trainNumber, selectedDate, resultContainer) {
         const tbody = table.createTBody();
 
         // Create table headers
-        const headers = ['Estação', 'Programado', 'Real'];
+        const headers = ['Estação', 'Programado', 'Real', "Atrasos Anteriores"];
         const headerRow = thead.insertRow();
         headers.forEach(headerText => {
             const th = document.createElement('th');
