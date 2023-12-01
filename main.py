@@ -18,7 +18,7 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 }
 
-github_train_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-11/{current_date}/trains.json"
+github_train_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-12/{current_date}/trains.json"
 github_train_response = requests.get(github_train_url, headers=headers)
 train_numbers = []
 if github_train_response.status_code == 200:
@@ -35,13 +35,13 @@ if github_train_response.status_code == 200:
             continue
         infraestruturas_data = infraestruturas_response.json()
         # Define GitHub raw URL
-        github_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-11/{current_date}/{train_number}.json"
+        github_url = f"https://raw.githubusercontent.com/Ladol/trains/main/2023-12/{current_date}/{train_number}.json"
         # Check if the GitHub raw URL exists (returns 404 if not)
         github_response = requests.get(github_url, headers=headers)
 
         if github_response.status_code == 404:
             # Save processed data to a file
-            with open(f'./2023-11/{current_date}/{train_number}.json', 'w') as json_file:
+            with open(f'./2023-12/{current_date}/{train_number}.json', 'w') as json_file:
                 json.dump(infraestruturas_data, json_file)
 
         situacao_comboio = infraestruturas_data["response"]["SituacaoComboio"]
@@ -83,11 +83,11 @@ if github_train_response.status_code == 200:
                 
             # Save updated data1 to a file
             if write:
-                with open(f'./2023-11/{current_date}/{train_number}.json', 'w') as json_file:
+                with open(f'./2023-12/{current_date}/{train_number}.json', 'w') as json_file:
                     json.dump(github_data, json_file)
             else:
                 github_train_data["trains"].remove(train_number)
                 updateNumbers = True
     if updateNumbers:
-        with open(f'./2023-11/{current_date}/trains.json', 'w') as json_file:
+        with open(f'./2023-12/{current_date}/trains.json', 'w') as json_file:
             json.dump(github_train_data, json_file)
